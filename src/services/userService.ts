@@ -1,13 +1,31 @@
-import { User } from "../types"
+import { UserType, UserEntry } from "../types"
+const User = require('./../models/user')
+const bcrypt = require('bcrypt')
 
-const user:User = {
+
+
+const user:UserType = {
     username: "Niko",
     password: "1234",
     id: 1
 }
 
-const getEntries = (): User => {
+const getEntries = (): UserType => {
     return user
 }
 
-export default {getEntries}
+const addUser = async (entry: UserEntry): Promise<UserType> => {
+    const saltRounds = 10
+    const passwordHash = await bcrypt.hash(entry.password, saltRounds)
+    const user = new User ({
+        username: entry.username,
+        passwordHash,
+      })
+    
+    const savedUser = await user.save()
+
+    return savedUser
+
+}
+
+export default {getEntries, addUser}
