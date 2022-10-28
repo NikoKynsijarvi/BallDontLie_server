@@ -1,4 +1,4 @@
-import { UserEntry } from "./types"
+import { UserEntry } from "./../types"
 
 type Fields={username:unknown, password:unknown}
 
@@ -26,3 +26,4 @@ export const toNewUserEntry=({username, password}: Fields): UserEntry=> {
     }
     return newEntry
 }
+

@@ -1,18 +1,15 @@
 import express from 'express';
 import userRouter from "./routes/userRouter"
+import loginRouter from "./routes/loginRouter";
 import {connect} from "mongoose"
-require('dotenv').config()
+const config = require('./utils/config')
 
 const app = express();
 app.use(express.json());
 
-const url = process.env.MONGODB_URI
+console.log('connecting to', config.MONGODB_URI)
 
-console.log('connecting to', url)
-
-const PORT = process.env.PORT;
-
-connect(url!)
+connect(config.MONGODB_URI!)
   .then(_result => {
     console.log('connected to MongoDB')
   })
@@ -21,9 +18,8 @@ connect(url!)
   })
 
 app.use('/api/user', userRouter)
+app.use('/api/login', loginRouter)
 
-
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(config.PORT, () => {
+  console.log(`Server running on port ${config.PORT}`);
 });

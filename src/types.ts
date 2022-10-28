@@ -8,3 +8,8 @@ export interface UserEntry {
     username: string,
     password: string,
 }
+
+export interface UserLogin {
+    token: string,
+    username: string
+}

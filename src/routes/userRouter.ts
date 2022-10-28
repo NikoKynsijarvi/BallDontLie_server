@@ -1,16 +1,21 @@
 import express from 'express';
 import userService from '../services/userService';
-import { toNewUserEntry } from '../utils';
-
+import { toNewUserEntry } from '../utils/parser';
+const User = require('./../models/user')
 const router = express.Router();
 
-router.get('/', (_req, res) => {
-  res.send(userService.getEntries());
-});
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   try {
     const newUserEntry = toNewUserEntry(req.body)
+    const username = newUserEntry.username;
+    const existingUser = await User.findOne({username});
+    
+    if(existingUser){
+      return res.status(400).json({
+        error: 'username must be unique'
+      })
+    }
     userService.addUser(newUserEntry).then((addedEntry) => {
       res.status(201).json(addedEntry)
     })
