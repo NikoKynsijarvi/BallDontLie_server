@@ -4,6 +4,14 @@ export interface UserType{
     id: number
 }
 
+export interface ShotgroupType {
+    username: string,
+    type: ShotType,
+    shotsmade: number,
+    shotsattempted: number,
+    date: string
+}
+
 export interface UserEntry {
     username: string,
     password: string,
@@ -12,4 +20,10 @@ export interface UserEntry {
 export interface UserLogin {
     token: string,
     username: string
+}
+
+export enum ShotType {
+    Freethrow ="ft",
+    Threepoint = "3p",
+    Midrange = "2p"
 }
