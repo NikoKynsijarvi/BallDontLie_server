@@ -12,6 +12,15 @@ export interface ShotgroupType {
     date: string
 }
 
+export interface ShotgroupEntry {
+    username: string,
+    type: ShotType,
+    shotsmade: number,
+    shotsattempted: number,
+    date: string,
+    user_id: string
+}
+
 export interface UserEntry {
     username: string,
     password: string,
