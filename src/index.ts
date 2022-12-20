@@ -4,8 +4,11 @@ import loginRouter from "./routes/loginRouter";
 import shotgroupRouter from "./routes/shotgroupRouter"
 import {connect} from "mongoose"
 const config = require('./utils/config')
+const cors = require('cors')
+
 
 const app = express();
+app.use(cors())
 app.use(express.json());
 
 console.log('connecting to', config.MONGODB_URI)

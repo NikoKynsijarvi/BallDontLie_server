@@ -22,7 +22,8 @@ const loginUser = async (entry:UserEntry): Promise<UserLogin | number> => {
 
     const loggedInUser = {
       token: token,
-      username: user.username
+      username: user.username,
+      user_id: user._id
     }
     return loggedInUser
 }

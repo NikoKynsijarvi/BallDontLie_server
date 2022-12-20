@@ -2,15 +2,18 @@ import express from 'express';
 import { toShotgroupEntry } from '../utils/parser';
 import shotgroupService from '../services/shotgroupService';
 const User = require('./../models/user')
+const jwt = require('jsonwebtoken')
+
 
 
 const router = express.Router();
 
-router.get('/', async(req, res) => {
+router.get('/:id', async(req, res) => {
     try {
-        const shotgroups = shotgroupService.findAll(req.params.id)
+        const id  = req.params['id']
+        const shotgroups = await shotgroupService.findAll(id)
         if(shotgroups){
-            res.send(shotgroups)
+            res.status(200).send(shotgroups)
         }else {
             res.status(404).send()
         }
@@ -19,8 +22,25 @@ router.get('/', async(req, res) => {
     }
 })
 
+const getTokenFrom = (request:any) => {
+    const authorization = request.get('authorization')
+    if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+      return authorization.substring(7)
+    }
+    return null
+  }
+
 router.post('/', async(req, res) => {
     try {
+        const token = getTokenFrom(req);
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+            if (!token || !decodedToken.id) {
+                return res.status(401).json({ error: 'token missing or invalid' })
+            }
+            ///////////////Continue token based auth
+        const user = User.findById(decodedToken.id)
+        console.log(user);
+        
         const newShotgroupEntry = toShotgroupEntry(req.body)
         const username = newShotgroupEntry.username
         const existingUser = await User.findOne({username});        

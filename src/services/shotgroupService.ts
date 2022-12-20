@@ -1,8 +1,10 @@
 import { ShotgroupEntry} from "../types"
 const Shotgroup = require('./../models/shotGroup')
 
+
+
 const findAll = async(entry:string): Promise<[ShotgroupEntry]> => {
-    const shotgroups = await Shotgroup.findById(entry)
+    const shotgroups = await Shotgroup.find({user:entry})    
     return shotgroups
 }
 
@@ -14,10 +16,9 @@ const addShotgroup = async (entry:ShotgroupEntry): Promise<ShotgroupEntry> => {
         shotsmade: entry.shotsmade,
         shotsattempted: entry.shotsattempted,
         date: entry.date,
-        user_id: entry.user_id
-    })
+        user: entry.user_id
+    })    
     const savedShotgroup =  await newShotgroup.save()
-
     return savedShotgroup
 }
 

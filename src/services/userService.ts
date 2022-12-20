@@ -1,8 +1,8 @@
-import { UserType, UserEntry } from "../types"
+import {  UserEntry, ReturnedUserType } from "../types"
 const User = require('./../models/user')
 const bcrypt = require('bcrypt')
 
-const addUser = async (entry: UserEntry): Promise<UserType> => {
+const addUser = async (entry: UserEntry): Promise<ReturnedUserType> => {
     const saltRounds = 10
     const passwordHash = await bcrypt.hash(entry.password, saltRounds)
     const user = new User ({
@@ -11,8 +11,8 @@ const addUser = async (entry: UserEntry): Promise<UserType> => {
       })
     
     const savedUser = await user.save()
-
-    return savedUser
+    const returnedUser = {username: savedUser.username}
+    return returnedUser
 
 }
 
