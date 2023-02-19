@@ -37,14 +37,11 @@ router.post('/', async(req, res) => {
             if (!token || !decodedToken.id) {
                 return res.status(401).json({ error: 'token missing or invalid' })
             }
-            ///////////////Continue token based auth
         const user = User.findById(decodedToken.id)
-        console.log(user);
+        console.log(decodedToken);
         
         const newShotgroupEntry = toShotgroupEntry(req.body)
-        const username = newShotgroupEntry.username
-        const existingUser = await User.findOne({username});        
-        if(!existingUser){
+        if(!user){
             return res.status(400).send("No user found")
         }
         if(newShotgroupEntry.shotsattempted < newShotgroupEntry.shotsmade){
@@ -56,7 +53,7 @@ router.post('/', async(req, res) => {
             shotsattempted: newShotgroupEntry.shotsattempted,
             shotsmade: newShotgroupEntry.shotsmade,
             date: newShotgroupEntry.date,
-            user_id: existingUser._id
+            user_id: user._id
         }
         shotgroupService.addShotgroup(shotgroupEntry).then((newshotgroup) => {
             return res.status(201).send(newshotgroup)

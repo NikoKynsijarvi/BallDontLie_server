@@ -2,6 +2,7 @@ import express from 'express';
 import userRouter from "./routes/userRouter"
 import loginRouter from "./routes/loginRouter";
 import shotgroupRouter from "./routes/shotgroupRouter"
+import bbcourtsRouter from "./routes/bbcourtsRouter"
 import {connect} from "mongoose"
 const config = require('./utils/config')
 const cors = require('cors')
@@ -28,6 +29,7 @@ connect(config.MONGODB_URI!)
 app.use('/api/user', userRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/shotgroup', shotgroupRouter)
+app.use('/api/courts', bbcourtsRouter)
 app.use(unknownEndpoint)
 
 app.listen(config.PORT, () => {

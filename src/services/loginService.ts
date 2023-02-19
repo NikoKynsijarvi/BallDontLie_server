@@ -1,8 +1,6 @@
 import { UserEntry, UserLogin } from "../types"
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
-
-
 const User = require('./../models/user')
 
 const loginUser = async (entry:UserEntry): Promise<UserLogin | number> => {
