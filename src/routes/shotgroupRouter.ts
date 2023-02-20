@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken')
 const router = express.Router();
 
 router.get('/:id', async(req, res) => {
-    try {
+    try {        
         const id  = req.params['id']
         const shotgroups = await shotgroupService.findAll(id)
         if(shotgroups){
@@ -37,8 +37,8 @@ router.post('/', async(req, res) => {
             if (!token || !decodedToken.id) {
                 return res.status(401).json({ error: 'token missing or invalid' })
             }
-        const user = User.findById(decodedToken.id)
-        console.log(decodedToken);
+        const user = await User.findById(decodedToken.id)
+        console.log(user);
         
         const newShotgroupEntry = toShotgroupEntry(req.body)
         if(!user){

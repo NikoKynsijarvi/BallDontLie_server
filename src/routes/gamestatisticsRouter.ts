@@ -2,6 +2,7 @@ import express from 'express';
 const jwt = require('jsonwebtoken')
 const User = require('./../models/user')
 import { toGamestatisticsEntry } from '../utils/parser';
+import gamestatisticsService from '../services/gamestatisticsService';
 
 const router = express.Router();
 
@@ -26,6 +27,10 @@ router.post("/", (req, res) => {
             return res.status(400).send("No user found")
         }
         const newEntry = toGamestatisticsEntry(req.body)
+        gamestatisticsService.addGamestatistics(newEntry).then((res) => {
+            console.log(res);
+            
+        })
         
     } catch (error) {
         
