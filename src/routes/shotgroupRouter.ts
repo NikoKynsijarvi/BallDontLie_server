@@ -8,9 +8,30 @@ const jwt = require('jsonwebtoken')
 
 const router = express.Router();
 
+router.get('/statistics/:id', async (req, res) => {
+    try {        
+        const id  = req.params['id']
+
+        const user = await User.findById(id)
+        if(!user){
+            return res.status(404).send("Invalid id")
+        }
+        
+        const statistics = await shotgroupService.formatStatistics(id)
+        if(statistics){
+            res.status(200).send(statistics)
+        }else {
+            res.status(404).send()
+        }
+    } catch (error) {
+        res.status(404).send(error)
+    }
+})
+
 router.get('/:id', async(req, res) => {
     try {        
         const id  = req.params['id']
+
         const shotgroups = await shotgroupService.findAll(id)
         if(shotgroups){
             res.status(200).send(shotgroups)
@@ -18,6 +39,7 @@ router.get('/:id', async(req, res) => {
             res.status(404).send()
         }
     } catch (error) {
+        console.log(error);
         
     }
 })

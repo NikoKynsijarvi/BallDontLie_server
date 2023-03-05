@@ -8,6 +8,7 @@ export interface ReturnedUserType {
     username: string
 }
 
+
 export interface ShotgroupType {
     username: string,
     type: ShotType,
@@ -33,6 +34,26 @@ export interface ShotgroupEntry {
     shotsattempted: number,
     date: string,
     user_id: string
+}
+
+export interface ShotsPerMonth{
+    month: number,
+    year: number,
+    month_total:number,
+    month_threes:number,
+    month_fts:number
+}
+
+export interface ShotgroupStatistics {
+    user_id: string,
+    total: number,
+    total_threes:number,
+    total_fts:number,
+    total_fg:number,
+    total_three_fg: number,
+    total_ft_percentage:number,
+    this_year_monthly:ShotsPerMonth[]
+
 }
 
 export interface UserEntry {
