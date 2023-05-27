@@ -32,6 +32,8 @@ const basketballCourtSchema: Schema = new Schema(
     },
     object_type: { type: String },
     rating: { type: Number },
+    times_rated: { type: Number },
+    rating_sum: { rating: Number },
   },
   { collection: "bbcourts" }
 );

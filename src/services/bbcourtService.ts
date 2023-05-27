@@ -5,9 +5,17 @@ const getCourts = async () => {
   return courts;
 };
 
-const rateCourt = async (courtId: string) => {
+const rateCourt = async (courtId: string, rating: number) => {
   const court = await BasketBallCourt.find({ _id: courtId });
-  console.log(court);
+  const ratingSum = court.rating + rating;
+  const newTimes_rated = court.times_rated + 1;
+  const ratedCourt = {
+    ...court,
+    ratingSum: ratingSum,
+    rating: ratingSum / newTimes_rated,
+    times_rated: newTimes_rated,
+  };
+  console.log(ratedCourt);
 
   return court;
 };
