@@ -6,18 +6,21 @@ const getCourts = async () => {
 };
 
 const rateCourt = async (courtId: string, rating: number) => {
-  const court = await BasketBallCourt.find({ _id: courtId });
-  const ratingSum = court.rating + rating;
+  const court = await BasketBallCourt.findOne({ _id: courtId });
+  const ratingSum = parseInt(court.rating_sum) + rating;
   const newTimes_rated = court.times_rated + 1;
-  const ratedCourt = {
-    ...court,
-    ratingSum: ratingSum,
-    rating: ratingSum / newTimes_rated,
-    times_rated: newTimes_rated,
-  };
-  console.log(ratedCourt);
 
-  return court;
+  const updateCourt = await BasketBallCourt.findOneAndUpdate(
+    { _id: courtId },
+    {
+      rating: ratingSum / newTimes_rated,
+      rating_sum: ratingSum,
+      times_rated: court.times_rated + 1,
+    },
+    { new: true }
+  );
+
+  return updateCourt;
 };
 
 export default {

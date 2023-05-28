@@ -41,7 +41,6 @@ router.put("/review/:id", async (req, res) => {
     }
     const rated = await bbcourtService.rateCourt(courtId, rating);
     res.send(rated);
-    console.log(user);
   } catch (error) {}
 });
 
