@@ -39,7 +39,10 @@ router.put("/review/:id", async (req, res) => {
     if (!user) {
       res.status(400);
     }
-    const rated = await bbcourtService.rateCourt(courtId, rating);
+    const rated = await bbcourtService.rateCourt(courtId, rating, user._id);
+    if (!rated) {
+      res.status(400);
+    }
     res.send(rated);
   } catch (error) {}
 });

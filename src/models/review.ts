@@ -1,9 +1,9 @@
 import mongoose, { Schema } from "mongoose";
 
 const reviewSchema: Schema = new Schema({
-  username: { type: String, required: true },
+  userId: { type: Object, required: true },
   rating: { type: Number, required: true },
-  courtId: { type: Number, required: true },
+  courtId: { type: Object, required: true },
 });
 
 const Review = mongoose.model("Review", reviewSchema);
