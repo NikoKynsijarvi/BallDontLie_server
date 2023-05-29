@@ -34,6 +34,12 @@ const basketballCourtSchema: Schema = new Schema(
     rating: { type: Number },
     times_rated: { type: Number },
     rating_sum: { rating: Number },
+    newest_ratings: [
+      {
+        date: { type: Date },
+        rating: { type: Number },
+      },
+    ],
   },
   { collection: "bbcourts" }
 );
